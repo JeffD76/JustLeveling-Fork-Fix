@@ -2,7 +2,7 @@ package com.seniors.justlevelingfork.network.packet.client;
 
 import com.seniors.justlevelingfork.network.packet.JustLevelingPacket;
 
-import com.seniors.justlevelingfork.client.gui.OverlayAptitudeGui;
+import com.seniors.justlevelingfork.client.core.ClientHooks;
 import com.seniors.justlevelingfork.network.ServerNetworking;
 
 
@@ -26,7 +26,7 @@ public class AptitudeOverlayCP implements JustLevelingPacket {
     }
 
     public void handle(ServerPlayer sender) {
-        OverlayAptitudeGui.showWarning(this.aptitude);
+        ClientHooks.showAptitudeWarning(this.aptitude);
     }
 
     public static void send(Player player, String aptitude) {

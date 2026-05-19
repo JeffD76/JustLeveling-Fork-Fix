@@ -2,9 +2,8 @@ package com.seniors.justlevelingfork.network.packet.client;
 
 import com.seniors.justlevelingfork.network.packet.JustLevelingPacket;
 
-import com.seniors.justlevelingfork.client.gui.OverlayTitleGui;
+import com.seniors.justlevelingfork.client.core.ClientHooks;
 import com.seniors.justlevelingfork.network.ServerNetworking;
-import com.seniors.justlevelingfork.registry.RegistryTitles;
 import com.seniors.justlevelingfork.registry.title.Title;
 
 
@@ -28,9 +27,7 @@ public class TitleOverlayCP implements JustLevelingPacket {
     }
 
     public void handle(ServerPlayer sender) {
-            Title title = RegistryTitles.getTitle(this.title);
-            OverlayTitleGui.list.enqueue(title);
-            OverlayTitleGui.showWarning();
+            ClientHooks.showTitleWarning(this.title);
     }
 
     public static void send(Player player, Title title) {

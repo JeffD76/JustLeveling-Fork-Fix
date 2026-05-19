@@ -2,14 +2,10 @@ package com.seniors.justlevelingfork.network.packet.client;
 
 import com.seniors.justlevelingfork.network.packet.JustLevelingPacket;
 
-import com.seniors.justlevelingfork.handler.HandlerConfigClient;
+import com.seniors.justlevelingfork.client.core.ClientHooks;
 import com.seniors.justlevelingfork.network.ServerNetworking;
 
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
@@ -34,13 +30,7 @@ public class PlayerMessagesCP implements JustLevelingPacket {
     }
 
     public void handle(ServerPlayer sender) {
-            LocalPlayer localPlayer = (Minecraft.getInstance()).player;
-            assert localPlayer != null;
-            if (this.message.equals("overlay.skill.justlevelingfork.lucky_drop") && HandlerConfigClient.showLuckyDropSkillOverlay.get()) {
-                localPlayer.displayClientMessage(Component.translatable(this.message, this.amount), true);
-            } else if ((this.message.equals("overlay.skill.justlevelingfork.critical_roll_1") || this.message.equals("overlay.skill.justlevelingfork.critical_roll_6")) && HandlerConfigClient.showCriticalRollSkillOverlay.get()) {
-                localPlayer.displayClientMessage(Component.translatable(this.message, this.amount), true);
-            }
+            ClientHooks.displayPlayerMessage(this.message, this.amount);
     }
 
     public static void send(Player player, String message, int amount) {

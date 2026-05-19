@@ -2,10 +2,9 @@ package com.seniors.justlevelingfork.network.packet.client;
 
 import com.seniors.justlevelingfork.network.packet.JustLevelingPacket;
 
+import com.seniors.justlevelingfork.client.core.ClientHooks;
 import com.seniors.justlevelingfork.handler.HandlerCommonConfig;
 import com.seniors.justlevelingfork.network.ServerNetworking;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -223,8 +222,7 @@ public class DynamicConfigSyncCP implements JustLevelingPacket {
     }
 
     public void handle(ServerPlayer sender) {
-            LocalPlayer localPlayer = (Minecraft.getInstance()).player;
-            if(localPlayer != null){
+            if(ClientHooks.hasClientPlayer()){
                 HandlerCommonConfig.HANDLER.instance().aptitudeMaxLevel = this.aptitudeMaxLevel;
                 HandlerCommonConfig.HANDLER.instance().playersMaxGlobalLevel = this.playersMaxGlobalLevel;
                 HandlerCommonConfig.HANDLER.instance().attackPassiveLevels = this.attackPassiveLevels;

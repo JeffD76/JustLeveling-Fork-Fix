@@ -1,7 +1,7 @@
 package com.seniors.justlevelingfork.common.capability;
 
 import com.seniors.justlevelingfork.client.core.Aptitudes;
-import com.seniors.justlevelingfork.client.gui.OverlayAptitudeGui;
+import com.seniors.justlevelingfork.client.core.ClientHooks;
 import com.seniors.justlevelingfork.handler.HandlerAptitude;
 import com.seniors.justlevelingfork.handler.HandlerCommonConfig;
 import com.seniors.justlevelingfork.integration.MiapiIntegration;
@@ -12,8 +12,6 @@ import com.seniors.justlevelingfork.registry.aptitude.Aptitude;
 import com.seniors.justlevelingfork.registry.passive.Passive;
 import com.seniors.justlevelingfork.registry.skills.Skill;
 import com.seniors.justlevelingfork.registry.title.Title;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -101,11 +99,7 @@ public class AptitudeCapability {
 
     @Nullable
     public static AptitudeCapability get() {
-        LocalPlayer player = Minecraft.getInstance().player;
-        if (player == null ) {
-            return null;
-        }
-        return get(player);
+        return ClientHooks.getClientAptitudeCapability();
     }
 
     public int getAptitudeLevel(Aptitude aptitude) {
@@ -270,7 +264,7 @@ public class AptitudeCapability {
         if (aptitude != null) {
             for (Aptitudes aptitudes : aptitude) {
                 if (getAptitudeLevel(aptitudes.getAptitude()) < aptitudes.getAptitudeLvl()) {
-                    OverlayAptitudeGui.showWarning(resource.toString());
+                    ClientHooks.showAptitudeWarning(resource.toString());
                     return false;
                 }
             }
