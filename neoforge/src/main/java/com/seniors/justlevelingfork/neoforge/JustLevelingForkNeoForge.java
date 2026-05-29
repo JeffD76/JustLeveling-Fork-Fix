@@ -25,6 +25,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
@@ -111,6 +112,7 @@ public class JustLevelingForkNeoForge {
     }
 
     private void attackEntity(AttackEntityEvent event) {
+        if (event.getEntity() instanceof FakePlayer) return;
         if (!RegistryGameplayEvents.canUseItem(event.getEntity(), event.getEntity().getMainHandItem())) {
             event.setCanceled(true);
             return;
@@ -121,6 +123,7 @@ public class JustLevelingForkNeoForge {
     }
 
     private void rightClickItem(PlayerInteractEvent.RightClickItem event) {
+        if (event.getEntity() instanceof FakePlayer) return;
         if (!RegistryGameplayEvents.canUseItem(event.getEntity(), event.getItemStack())) {
             event.setCancellationResult(InteractionResult.FAIL);
             event.setCanceled(true);
@@ -128,6 +131,7 @@ public class JustLevelingForkNeoForge {
     }
 
     private void rightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getEntity() instanceof FakePlayer) return;
         if (!RegistryGameplayEvents.canUseItem(event.getEntity(), event.getItemStack())
                 || !RegistryGameplayEvents.canUseBlock(event.getEntity(), event.getLevel().getBlockState(event.getPos()).getBlock())) {
             event.setCancellationResult(InteractionResult.FAIL);
@@ -136,6 +140,7 @@ public class JustLevelingForkNeoForge {
     }
 
     private void entityInteract(PlayerInteractEvent.EntityInteract event) {
+        if (event.getEntity() instanceof FakePlayer) return;
         if (!RegistryGameplayEvents.canUseEntity(event.getEntity(), event.getTarget())
                 || !RegistryGameplayEvents.canUseItem(event.getEntity(), event.getItemStack())) {
             event.setCancellationResult(InteractionResult.FAIL);
@@ -144,6 +149,7 @@ public class JustLevelingForkNeoForge {
     }
 
     private void breakBlock(BlockEvent.BreakEvent event) {
+        if (event.getPlayer() instanceof FakePlayer) return;
         if (!RegistryGameplayEvents.canUseItem(event.getPlayer(), event.getPlayer().getMainHandItem())
                 || !RegistryGameplayEvents.canUseBlock(event.getPlayer(), event.getState().getBlock())) {
             event.setCanceled(true);
